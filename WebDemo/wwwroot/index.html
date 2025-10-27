@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Thai ID – Web Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --accent: #2563eb;
+            --line: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Inter',system-ui,sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .btn {
+            appearance: none;
+            border: 0;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform .08s ease,opacity .15s ease;
+        }
+
+            .btn:hover {
+                transform: translateY(-1px);
+                opacity: .95
+            }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            box-shadow: 0 6px 24px rgba(15,23,42,.06);
+        }
+
+        .photoBox {
+            background: #f1f5f9;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .photoBox img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 18px;
+        }
+
+        .row {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            border-bottom: 1px dashed var(--line);
+            padding: 6px 0
+        }
+
+        .k {
+            min-width: 130px;
+            color: var(--muted)
+        }
+
+        .v {
+            flex: 1
+        }
+
+        .status {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #9ca3af
+        }
+
+        .ok .dot {
+            background: #22c55e
+        }
+
+        .err .dot {
+            background: #ef4444
+        }
+
+        @media(max-width:850px) {
+            .card {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+
+            .meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="head">
+            <div class="title">Thai ID – Web Demo</div>
+            <button class="btn" onclick="readThaiId()">อ่านจาก WebAgent</button>
+        </div>
+
+        <div class="card">
+            <div class="photoBox">
+                <img id="photo" src="/img/default-photo.png" alt="รูปผู้ถือบัตร">
+            </div>
+
+            <div class="meta">
+                <div class="row"><div class="k">เลขบัตร</div><div class="v" id="citizenId">–</div></div>
+                <div class="row"><div class="k">ชื่อ-สกุล (ไทย)</div><div class="v" id="thFullName">–</div></div>
+                <div class="row"><div class="k">ชื่อ-สกุล (อังกฤษ)</div><div class="v" id="enFullName">–</div></div>
+                <div class="row"><div class="k">เพศ</div><div class="v" id="gender">–</div></div>
+                <div class="row"><div class="k">วันเกิด</div><div class="v" id="birthDate">–</div></div>
+                <div class="row"><div class="k">วันออกบัตร</div><div class="v" id="issueDate">–</div></div>
+                <div class="row"><div class="k">วันหมดอายุ</div><div class="v" id="expireDate">–</div></div>
+                <div class="row" style="grid-column:1/-1"><div class="k">ผู้ออกบัตร</div><div class="v" id="issuer">–</div></div>
+                <div class="row" style="grid-column:1/-1"><div class="k">ที่อยู่</div><div class="v" id="address">–</div></div>
+            </div>
+        </div>
+
+        <div class="status" id="status"><span class="dot"></span><span>พร้อมอ่านบัตร</span></div>
+    </div>
+
+    <script>
+        const el = id => document.getElementById(id);
+        const safeSet = (id, value) => { const e = el(id); if (e) e.textContent = value ?? '–'; };
+
+        async function readThaiId() {
+            const status = el('status');
+            status.classList.remove('ok', 'err');
+            status.querySelector('span:last-child').textContent = 'กำลังอ่านจาก WebAgent...';
+
+            try {
+                const ping = await fetch('https://127.0.0.1:17890/idcard/ping');
+                if (!ping.ok) throw new Error('WebAgent ไม่ตอบสนอง');
+
+                const resp = await fetch('https://127.0.0.1:17890/idcard/read', { method: 'POST' });
+                const data = await resp.json();
+                if (!data.success) throw new Error(data.message);
+
+                safeSet('citizenId', data.citizenId);
+                safeSet('thFullName', data.thFullName);
+                safeSet('enFullName', data.enFullName);
+
+                const genderLabel = (data.gender === '1' || data.gender === 1) ? 'ชาย'
+                    : (data.gender === '2' || data.gender === 2) ? 'หญิง' : '-';
+                safeSet('gender', genderLabel);
+
+                const fmt = s => s ? new Date(s).toLocaleDateString('th-TH') : '–';
+                safeSet('birthDate', fmt(data.birthDate));
+                safeSet('issueDate', fmt(data.issueDate));
+                safeSet('expireDate', fmt(data.expireDate));
+                safeSet('issuer', data.issuer);
+                safeSet('address', data.address);
+
+                const photo = el('photo');
+                if (data.photoBase64) photo.src = 'data:image/jpeg;base64,' + data.photoBase64;
+                else photo.src = '/img/default-photo.png';
+
+                status.classList.add('ok');
+                status.querySelector('span:last-child').textContent = 'อ่านข้อมูลสำเร็จ ✅';
+            } catch (err) {
+                console.error(err);
+                status.classList.add('err');
+                status.querySelector('span:last-child').textContent = 'ล้มเหลว: ' + err.message;
+            }
+        }
+    </script>
+</body>
+</html>

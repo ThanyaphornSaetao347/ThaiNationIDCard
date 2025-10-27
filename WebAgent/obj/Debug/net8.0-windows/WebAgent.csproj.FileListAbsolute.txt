@@ -1,0 +1,7 @@
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\WebAgent.csproj.AssemblyReference.cache
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\rpswa.dswa.cache.json
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\WebAgent.GeneratedMSBuildEditorConfig.editorconfig
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\WebAgent.AssemblyInfoInputs.cache
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\WebAgent.AssemblyInfo.cs
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\WebAgent.csproj.CoreCompileInputs.cache
+D:\projectCom\ThaiIDSuite\WebAgent\obj\Debug\net8.0-windows\WebAgent.MvcApplicationPartsAssemblyInfo.cache
