@@ -154,7 +154,6 @@
     <div class="wrap">
         <div class="head">
             <div class="title">Thai ID – Web Demo</div>
-            <button class="btn" onclick="readThaiId()">อ่านจาก WebAgent</button>
         </div>
 
         <div class="card">
@@ -175,25 +174,69 @@
             </div>
         </div>
 
-        <div class="status" id="status"><span class="dot"></span><span>พร้อมอ่านบัตร</span></div>
+        <div class="status" id="status"><span class="dot"></span><span>กำลังเชื่อมต่อ...</span></div>
     </div>
 
     <script>
         const el = id => document.getElementById(id);
         const safeSet = (id, value) => { const e = el(id); if (e) e.textContent = value ?? '–'; };
 
+        // === สถานะของหน้าจอ ===
+        let cardCitizenId = null; // เก็บเลขบัตรที่อ่านได้ล่าสุด
+
+        // ฟังก์ชันล้างข้อมูลบนหน้าจอ
+        function clearData() {
+            safeSet('citizenId', '–');
+            safeSet('thFullName', '–');
+            safeSet('enFullName', '–');
+            safeSet('gender', '–');
+            safeSet('birthDate', '–');
+            safeSet('issueDate', '–');
+            safeSet('expireDate', '–');
+            safeSet('issuer', '–');
+            safeSet('address', '–');
+            el('photo').src = '/img/default-photo.png';
+            cardCitizenId = null; // รีเซ็ตเลขบัตร
+        }
+
+        // === ปรับปรุงฟังก์ชัน readThaiId ===
         async function readThaiId() {
             const status = el('status');
-            status.classList.remove('ok', 'err');
-            status.querySelector('span:last-child').textContent = 'กำลังอ่านจาก WebAgent...';
 
             try {
-                const ping = await fetch('https://127.0.0.1:17890/idcard/ping');
-                if (!ping.ok) throw new Error('WebAgent ไม่ตอบสนอง');
-
+                // เราจะเช็คจาก /read โดยตรง
                 const resp = await fetch('https://127.0.0.1:17890/idcard/read', { method: 'POST' });
                 const data = await resp.json();
-                if (!data.success) throw new Error(data.message);
+
+                // === ส่วนที่ 1: จัดการเมื่อไม่สำเร็จ ===
+                if (!data.success) {
+                    // ถ้าไม่สำเร็จเพราะ "NO_CARD"
+                    if (data.message === 'NO_CARD') {
+                        // ถ้าหน้าจอยังมีข้อมูล (แสดงว่าบัตรเพิ่งถูกดึงออก)
+                        if (cardCitizenId !== null) {
+                            clearData(); // ล้างหน้าจอ
+                        }
+                        status.classList.remove('ok', 'err');
+                        status.querySelector('span:last-child').textContent = 'กรุณาเสียบบัตร...';
+                    } else {
+                        // ถ้าเป็น Error อื่นๆ (เช่น Agent ล่ม)
+                        throw new Error(data.message);
+                    }
+                    return; // จบการทำงานในรอบนี้
+                }
+
+                // === ส่วนที่ 2: จัดการเมื่ออ่านสำเร็จ (data.success === true) ===
+
+                // ถ้าเลขบัตรที่อ่านได้ เป็นเลขเดียวกับที่แสดงอยู่ (บัตรใบเดิม)
+                if (data.citizenId === cardCitizenId) {
+                    // ไม่ต้องทำอะไร, รอรอบต่อไป
+                    status.classList.add('ok');
+                    status.querySelector('span:last-child').textContent = 'อ่านข้อมูลสำเร็จ (บัตรเดิม)';
+                    return;
+                }
+
+                // ถ้าเป็นบัตรใบใหม่ ให้อัปเดตข้อมูล
+                cardCitizenId = data.citizenId; // เก็บเลขบัตรใหม่
 
                 safeSet('citizenId', data.citizenId);
                 safeSet('thFullName', data.thFullName);
@@ -216,12 +259,27 @@
 
                 status.classList.add('ok');
                 status.querySelector('span:last-child').textContent = 'อ่านข้อมูลสำเร็จ ✅';
+
             } catch (err) {
                 console.error(err);
+                clearData(); // ถ้ามีปัญหา ให้ล้างข้อมูล
                 status.classList.add('err');
                 status.querySelector('span:last-child').textContent = 'ล้มเหลว: ' + err.message;
             }
         }
+
+        // === ส่วนที่ 3: เพิ่มการเรียกอัตโนมัติ (Polling) ===
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ หน้าโหลดครบแล้ว: เริ่มการตรวจสอบบัตรอัตโนมัติ...');
+
+            // เรียกครั้งแรกทันทีที่โหลดเสร็จ
+            readThaiId();
+
+            // ตั้งเวลาวนซ้ำ (Polling) ทุก 1.5 วินาที (1500ms)
+            setInterval(() => {
+                readThaiId();
+            }, 1500);
+        });
     </script>
 </body>
 </html>
