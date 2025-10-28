@@ -12,4 +12,8 @@
 		<PackageReference Include="ThaiNationalIDCard" Version="2.0.0" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<StartupObject>DesktopReader.TrayHost</StartupObject>
+	</PropertyGroup>
+
 </Project>

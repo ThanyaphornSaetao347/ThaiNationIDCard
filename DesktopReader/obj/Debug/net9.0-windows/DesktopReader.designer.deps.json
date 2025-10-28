@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "PCSC/3.7.0": {
+        "runtime": {
+          "lib/net40/pcsc-sharp.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      },
+      "ThaiNationalIDCard/2.0.0": {
+        "dependencies": {
+          "PCSC": "3.7.0"
+        },
+        "runtime": {
+          "lib/net40/ThaiNationalIDCard.dll": {
+            "assemblyVersion": "2.0.0.6261",
+            "fileVersion": "2.0.0.0"
+          },
+          "lib/net40/pcsc-sharp.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PCSC/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7qxMwgKCOLA5zhhW/d5exG8hOMSRyGC2/oSH0y5KQTyF3qYfDIHHTImAfXP5Ld8DzIBe4G9RsGyZWa+bLrOsQg==",
+      "path": "pcsc/3.7.0",
+      "hashPath": "pcsc.3.7.0.nupkg.sha512"
+    },
+    "ThaiNationalIDCard/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wT3FmgrQz2a6yT7KHP1O/b4Z5nHYQM14aBdeCkYn7Qhb9+pL03tuK4NijZWby0cxa1rbxewFEmEUolHtjQOsNw==",
+      "path": "thainationalidcard/2.0.0",
+      "hashPath": "thainationalidcard.2.0.0.nupkg.sha512"
+    }
+  }
+}
