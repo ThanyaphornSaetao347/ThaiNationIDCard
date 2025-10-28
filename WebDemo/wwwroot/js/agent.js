@@ -1,4 +1,4 @@
-﻿async function readThaiId() {
+﻿wasync function readThaiId() {
     const status = document.getElementById('status');
     const img = document.getElementById('photo');
 
