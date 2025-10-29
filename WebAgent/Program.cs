@@ -1,19 +1,47 @@
 ﻿using System.Text;
+using WebAgent.Services;
 using ThaiNationalIDCard;
 
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ อนุญาตให้ frontend (WebDemo) เรียก API ได้
-builder.Services.AddCors(options =>
+// ✅ Register Controller + Service
+builder.Services.AddControllers();
+builder.Services.AddScoped<QuickThaiIdService>();
+
+// ✅ โหลด Allowed Origins จากไฟล์ .txt
+var exeDir = AppContext.BaseDirectory;
+var originFilePath = Path.Combine(exeDir, "allowed-origins.txt");
+
+string[] allowedOrigins;
+
+// ถ้าไฟล์มีอยู่ → โหลดทุกบรรทัดที่ไม่ว่าง
+if (File.Exists(originFilePath))
 {
-    options.AddPolicy("AllowWebDemo", policy =>
-        policy.WithOrigins("https://127.0.0.1:18000")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials());
-});
+    allowedOrigins = File.ReadAllLines(originFilePath)
+                         .Where(line => !string.IsNullOrWhiteSpace(line))
+                         .Select(line => line.Trim())
+                         .ToArray();
+}
+else
+{
+    // ถ้าไม่มีไฟล์ ให้ใช้ default ค่าเริ่มต้น
+    allowedOrigins = new[] { "https://127.0.0.1:18000" };
+    Console.WriteLine($"⚠️ ไม่พบไฟล์ allowed-origins.txt — ใช้ค่า default: {string.Join(", ", allowedOrigins)}");
+}
+
+// ✅ อนุญาตให้ frontend (WebDemo) เรียก API ได้
+
+    // ✅ ตั้งค่า CORS
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowWebDemo", policy =>
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials());
+    });
 
 // ✅ เพิ่ม Controller และ Service
 builder.Services.AddControllers();

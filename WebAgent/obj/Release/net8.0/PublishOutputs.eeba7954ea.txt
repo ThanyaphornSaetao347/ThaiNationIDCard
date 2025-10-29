@@ -1,0 +1,13 @@
+D:\projectCom\ThaiIDSuite\publish\WebAgent\WebAgent.exe
+D:\projectCom\ThaiIDSuite\publish\WebAgent\appsettings.Development.json
+D:\projectCom\ThaiIDSuite\publish\WebAgent\appsettings.json
+D:\projectCom\ThaiIDSuite\publish\WebAgent\WebAgent.dll
+D:\projectCom\ThaiIDSuite\publish\WebAgent\WebAgent.deps.json
+D:\projectCom\ThaiIDSuite\publish\WebAgent\WebAgent.runtimeconfig.json
+D:\projectCom\ThaiIDSuite\publish\WebAgent\WebAgent.pdb
+D:\projectCom\ThaiIDSuite\publish\WebAgent\PCSC.dll
+D:\projectCom\ThaiIDSuite\publish\WebAgent\PCSC.Iso7816.dll
+D:\projectCom\ThaiIDSuite\publish\WebAgent\System.Text.Encoding.CodePages.dll
+D:\projectCom\ThaiIDSuite\publish\WebAgent\ThaiNationalIDCard.dll
+D:\projectCom\ThaiIDSuite\publish\WebAgent\pcsc-sharp.dll
+D:\projectCom\ThaiIDSuite\publish\WebAgent\runtimes\win\lib\net8.0\System.Text.Encoding.CodePages.dll

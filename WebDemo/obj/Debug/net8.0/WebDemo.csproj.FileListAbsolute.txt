@@ -30,3 +30,4 @@ D:\projectCom\ThaiIDSuite\WebDemo\obj\Debug\net8.0\refint\WebDemo.dll
 D:\projectCom\ThaiIDSuite\WebDemo\obj\Debug\net8.0\WebDemo.pdb
 D:\projectCom\ThaiIDSuite\WebDemo\obj\Debug\net8.0\WebDemo.genruntimeconfig.cache
 D:\projectCom\ThaiIDSuite\WebDemo\obj\Debug\net8.0\ref\WebDemo.dll
+D:\projectCom\ThaiIDSuite\WebDemo\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -1,0 +1,7 @@
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\DesktopReader.exe
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\DesktopReader.dll
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\DesktopReader.deps.json
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\DesktopReader.runtimeconfig.json
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\DesktopReader.pdb
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\pcsc-sharp.dll
+D:\projectCom\ThaiIDSuite\publish\DesktopReader\ThaiNationalIDCard.dll
