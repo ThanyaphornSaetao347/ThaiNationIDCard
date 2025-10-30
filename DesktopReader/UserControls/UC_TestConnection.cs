@@ -13,7 +13,6 @@ namespace DesktopReader
         private PictureBox picPhoto;
         private HttpClient httpClient;
 
-        // เก็บ Label สำหรับอัปเดตค่า
         private Label lblCidValue, lblThaiNameValue, lblEngNameValue,
                       lblGenderValue, lblBirthValue, lblIssueValue,
                       lblExpireValue, lblIssuerValue, lblAddressValue;
@@ -33,15 +32,7 @@ namespace DesktopReader
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.WhiteSmoke;
 
-            Label lblHeader = new Label()
-            {
-                Text = "ทดสอบการเชื่อมต่อ",
-                Font = new Font("Sarabun", 16, FontStyle.Bold),
-                Location = new Point(40, 25),
-                AutoSize = true
-            };
-            Controls.Add(lblHeader);
-
+            // ✅ ปุ่มอ่านบัตร (ตำแหน่งเดิม)
             Button btnRead = new Button()
             {
                 Text = "📇 อ่านข้อมูลจากบัตรประชาชน",
@@ -50,57 +41,82 @@ namespace DesktopReader
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Size = new Size(280, 42),
-                Location = new Point(40, 70)
+                Location = new Point(40, 30)
             };
             btnRead.FlatAppearance.BorderSize = 0;
+            btnRead.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             btnRead.Click += async (s, e) => await BtnRead_ClickAsync(btnRead);
             Controls.Add(btnRead);
 
-            // กรอบข้อมูลหลัก
+            // ✅ พื้นหลังห่อ box ให้ไม่หลุดเฟรม
+            Panel wrapper = new Panel()
+            {
+                Dock = DockStyle.Fill,
+                Padding = new Padding(40, 80, 40, 20), // เว้นขอบจากปุ่มด้านบน
+                BackColor = Color.WhiteSmoke
+            };
+            Controls.Add(wrapper);
+
+            // ✅ กรอบข้อมูลหลัก (อยู่ในเฟรมพอดี)
             Panel infoPanel = new Panel()
             {
-                Location = new Point(40, 130),
-                Size = new Size(820, 420),
+                Dock = DockStyle.Fill,
                 BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                AutoScroll = true,
+                Padding = new Padding(20)
             };
-            Controls.Add(infoPanel);
+            wrapper.Controls.Add(infoPanel);
 
-            // ================= ซ้าย: รูปผู้ถือบัตร =================
+            // ✅ Layout ภายใน (responsive)
+            FlowLayoutPanel contentLayout = new FlowLayoutPanel()
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown,
+                AutoScroll = true,
+                WrapContents = false
+            };
+            infoPanel.Controls.Add(contentLayout);
+
+            // รูปและหัวข้อ
+            Label lblPhotoTitle = new Label()
+            {
+                Text = "รูปผู้ถือบัตร",
+                Font = new Font("Sarabun", 10, FontStyle.Bold),
+                AutoSize = true
+            };
+
             picPhoto = new PictureBox()
             {
-                Size = new Size(200, 260),
-                Location = new Point(25, 60),
+                Size = new Size(150, 200),
+                Margin = new Padding(0, 10, 0, 20),
                 BorderStyle = BorderStyle.FixedSingle,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.FromArgb(248, 250, 255)
             };
 
-            Label lblPhotoTitle = new Label()
+            FlowLayoutPanel photoLayout = new FlowLayoutPanel()
             {
-                Text = "รูปผู้ถือบัตร",
-                Font = new Font("Sarabun", 10, FontStyle.Bold),
-                Location = new Point(80, 30),
+                FlowDirection = FlowDirection.TopDown,
                 AutoSize = true
             };
+            photoLayout.Controls.Add(lblPhotoTitle);
+            photoLayout.Controls.Add(picPhoto);
+            contentLayout.Controls.Add(photoLayout);
 
-            infoPanel.Controls.Add(lblPhotoTitle);
-            infoPanel.Controls.Add(picPhoto);
-
-            // ================= ขวา: ตารางข้อมูล =================
+            // ✅ ตารางข้อมูล (ยืดหยุ่น)
             TableLayoutPanel tbl = new TableLayoutPanel()
             {
-                Location = new Point(250, 20),
-                Size = new Size(540, 370),
+                AutoSize = true,
+                Dock = DockStyle.Top,
                 ColumnCount = 4,
-                RowCount = 6,
                 BackColor = Color.White
             };
 
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130)); // Label ซ้าย
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));   // Value ซ้าย
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130)); // Label ขวา
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));   // Value ขวา
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
 
             AddRow(tbl, "เลขบัตร", out lblCidValue, "ชื่อ-สกุล (ไทย)", out lblThaiNameValue);
             AddRow(tbl, "ชื่อ-สกุล (อังกฤษ)", out lblEngNameValue, "เพศ", out lblGenderValue);
@@ -108,7 +124,7 @@ namespace DesktopReader
             AddRow(tbl, "วันหมดอายุ", out lblExpireValue, "ผู้ออกบัตร", out lblIssuerValue);
             AddRow(tbl, "ที่อยู่", out lblAddressValue, "", out _, true);
 
-            infoPanel.Controls.Add(tbl);
+            contentLayout.Controls.Add(tbl);
         }
 
         private void AddRow(TableLayoutPanel tbl,
@@ -117,7 +133,7 @@ namespace DesktopReader
             bool multiline = false)
         {
             int row = tbl.RowCount++;
-            tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, multiline ? 60 : 35));
+            tbl.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
             var lblLeft = CreateLabel(labelLeft, true);
             lblLeftValue = CreateLabel("-", false, multiline);
@@ -136,11 +152,14 @@ namespace DesktopReader
             {
                 Text = text,
                 Font = new Font("Sarabun", isTitle ? 10F : 10F, isTitle ? FontStyle.Bold : FontStyle.Regular),
-                Dock = DockStyle.Fill,
                 AutoSize = false,
+                Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = isTitle ? new Padding(0, 0, 5, 0) : new Padding(10, 0, 0, 0)
             };
+
+            if (multiline)
+                lbl.MaximumSize = new Size(0, 60);
 
             lbl.Paint += (s, e) =>
             {
@@ -150,8 +169,6 @@ namespace DesktopReader
                         e.Graphics.DrawLine(pen, 0, lbl.Height - 1, lbl.Width, lbl.Height - 1);
                 }
             };
-
-            if (multiline) lbl.AutoEllipsis = true;
             return lbl;
         }
 
@@ -177,13 +194,13 @@ namespace DesktopReader
                 var doc = JsonDocument.Parse(result);
                 var root = doc.RootElement;
 
-                lblCidValue.Text = TryGet(root, "cid");
-                lblThaiNameValue.Text = TryGet(root, "fullname_th");
-                lblEngNameValue.Text = TryGet(root, "fullname_en");
+                lblCidValue.Text = TryGet(root, "citizenId");
+                lblThaiNameValue.Text = TryGet(root, "thFullName");
+                lblEngNameValue.Text = TryGet(root, "enFullName");
                 lblGenderValue.Text = TryGet(root, "gender");
-                lblBirthValue.Text = TryGet(root, "dob");
-                lblIssueValue.Text = TryGet(root, "issue_date");
-                lblExpireValue.Text = TryGet(root, "expire_date");
+                lblBirthValue.Text = TryGet(root, "birthDate");
+                lblIssueValue.Text = TryGet(root, "issueDate");
+                lblExpireValue.Text = TryGet(root, "expireDate");
                 lblIssuerValue.Text = TryGet(root, "issuer");
                 lblAddressValue.Text = TryGet(root, "address");
 

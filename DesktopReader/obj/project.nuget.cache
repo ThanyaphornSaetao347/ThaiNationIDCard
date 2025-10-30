@@ -1,20 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "ZLqdRIF94ZE=",
+  "dgSpecHash": "eiHLzgIGK0U=",
   "success": true,
-  "projectFilePath": "D:\\projectCom\\ThaiIDSuite\\DesktopReader\\DesktopReader.csproj",
+  "projectFilePath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\DesktopReader\\DesktopReader.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Tou\\.nuget\\packages\\pcsc\\3.7.0\\pcsc.3.7.0.nupkg.sha512",
-    "C:\\Users\\Tou\\.nuget\\packages\\thainationalidcard\\2.0.0\\thainationalidcard.2.0.0.nupkg.sha512"
+    "C:\\Users\\ASUS TUF\\.nuget\\packages\\pcsc\\3.7.0\\pcsc.3.7.0.nupkg.sha512",
+    "C:\\Users\\ASUS TUF\\.nuget\\packages\\thainationalidcard\\2.0.0\\thainationalidcard.2.0.0.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'PCSC 3.7.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0-windows7.0'. This package may not be fully compatible with your project.",
-      "projectPath": "D:\\projectCom\\ThaiIDSuite\\DesktopReader\\DesktopReader.csproj",
+      "projectPath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\DesktopReader\\DesktopReader.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\projectCom\\ThaiIDSuite\\DesktopReader\\DesktopReader.csproj",
+      "filePath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\DesktopReader\\DesktopReader.csproj",
       "libraryId": "PCSC",
       "targetGraphs": [
         "net9.0-windows7.0"
@@ -24,9 +24,9 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'ThaiNationalIDCard 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net9.0-windows7.0'. This package may not be fully compatible with your project.",
-      "projectPath": "D:\\projectCom\\ThaiIDSuite\\DesktopReader\\DesktopReader.csproj",
+      "projectPath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\DesktopReader\\DesktopReader.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\projectCom\\ThaiIDSuite\\DesktopReader\\DesktopReader.csproj",
+      "filePath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\DesktopReader\\DesktopReader.csproj",
       "libraryId": "ThaiNationalIDCard",
       "targetGraphs": [
         "net9.0-windows7.0"

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\projectCom\\ThaiIDSuite\\WebDemo\\WebDemo.csproj": {}
+    "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\WebDemo\\WebDemo.csproj": {}
   },
   "projects": {
-    "D:\\projectCom\\ThaiIDSuite\\WebDemo\\WebDemo.csproj": {
+    "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\WebDemo\\WebDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projectCom\\ThaiIDSuite\\WebDemo\\WebDemo.csproj",
+        "projectUniqueName": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\WebDemo\\WebDemo.csproj",
         "projectName": "WebDemo",
-        "projectPath": "D:\\projectCom\\ThaiIDSuite\\WebDemo\\WebDemo.csproj",
-        "packagesPath": "C:\\Users\\Tou\\.nuget\\packages\\",
-        "outputPath": "D:\\projectCom\\ThaiIDSuite\\WebDemo\\obj\\",
+        "projectPath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\WebDemo\\WebDemo.csproj",
+        "packagesPath": "C:\\Users\\ASUS TUF\\.nuget\\packages\\",
+        "outputPath": "D:\\Work\\Project-khontamweb\\ThaiNationIDCard\\WebDemo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Tou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS TUF\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebAgent")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5cf9d23fbbafb9cba543ee13bf51ea47c16e8ecb")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebAgent")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebAgent")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
